@@ -20,4 +20,12 @@ class memcached {
     hasstatus => true,
     require => Package['memcached'],
   }
+  file{'/etc/sysconfig/memcached':
+      source =>  [
+        "puppet://$server/modules/site-memcached/memcached.sysconfig",
+        "puppet://$server/modules/nginx/memcached.sysconfig",
+      ],
+      notify => Service['memcached'],
+      owner => root, group => root, mode => 0444;
+  }
 }
